@@ -22,6 +22,7 @@ let loadingTimeout = null;
 
 function fetchTranslation(from, text, to) {
     loading.style.opacity = "1";
+    document.getElementById('errors').innerHTML = "";
 
     fetch('http://51.210.104.99:1841/translate', {
         method: 'POST',
@@ -64,6 +65,14 @@ function fetchTranslation(from, text, to) {
             }
         }, 1000);
     })
+    .catch(error => {
+        document.getElementById('errors').innerHTML += `
+            <div class="historyItem error">
+                <h3>Une erreur est survenue !</h3>
+                <p>${error}</p>
+            </div>
+        `;
+    });
 }
 
 let frenchSelect = document.getElementById('frenchSelect');

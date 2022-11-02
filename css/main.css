@@ -308,3 +308,12 @@ h4 {
         transform: translateX(100%);
     }
 }
+
+#errors {
+    margin-top: 20px;
+}
+
+.error {
+    background-color: #C91212;
+    color: #fff !important;
+}
