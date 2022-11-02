@@ -17,7 +17,12 @@ function escapeHtml(text) {
         .replace(/'/g, "&#039;");
 }
 
+let loading = document.getElementById('loading');
+let loadingTimeout = null;
+
 function fetchTranslation(from, text, to) {
+    loading.style.opacity = "1";
+
     fetch('http://51.210.104.99:1841/translate', {
         method: 'POST',
         headers: {
@@ -28,6 +33,11 @@ function fetchTranslation(from, text, to) {
     })
     .then(response => response.json())
     .then(response => {
+        clearTimeout(loadingTimeout);
+        loadingTimeout = setTimeout(() => {
+            loading.style.opacity = "0";
+        }, 500);
+
         let tranlation = response.response;
         output.innerHTML = tranlation;
 
