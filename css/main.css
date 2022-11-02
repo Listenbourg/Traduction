@@ -1,0 +1,281 @@
+@import url('https://fonts.cdnfonts.com/css/hk-groteks');
+
+* {
+    font-family: 'HK Grotesk', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f9f9f9;
+    width: 1100px;
+    margin: 0 auto;
+    padding-top: 73px;
+}
+
+.header {
+    background-color: #fff;
+    padding: 20px 10px;
+    border-bottom: 1px solid #55555544;
+
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.InnerHeader {
+    width: 1100px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 136.67px;
+    height: 32px;
+
+    background: url(../assets/logo.svg) no-repeat;
+}
+
+#translate {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.translateUI {
+    width: calc(100% - 0px);
+    background-color: white;
+    padding: 0px;
+    border-radius: 7px;
+    box-shadow: 0 1px 2px #0000001a;
+    position: relative;
+}
+
+.translateUIInner {
+    padding: 0px;
+}
+
+.translateUITitle {
+    padding: 12px 20px;
+    border-bottom: 1px solid #55555544;
+    position: relative;
+}
+
+.translateUITitle p {
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.languageSelect {
+    display: flex;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    height: 100%;
+    align-items: center;
+}
+
+.translateUI textarea {
+    width: calc(100% - 40px);
+    height: 70px;
+    padding: 20px;
+    border: none;
+    resize: none;
+    background: none;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.translateUI textarea:focus {
+    outline: none;
+}
+
+.language {
+    visibility: hidden;
+}
+
+.language + label {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #555;
+}
+
+.language:checked + label {
+    color: #C91212;
+    border-bottom: 1px solid #C91212;
+}
+
+.speak {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 300px;
+    border: 1px solid #00000055;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-size: 16px;
+}
+
+.speak:hover {
+    background-color: #0000001a;
+    cursor: pointer;
+}
+
+/* prefers dark */
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1C1B1F;
+        color: #fff;
+    }
+
+    .logo {   
+        background: url(../assets/logo_dark.svg) no-repeat;
+    }
+
+    .header {
+        background-color: #252429;
+        border-bottom: 1px solid #55555544;
+    }
+
+    .translateUI {
+        background-color: hsl(255, 7%, 15%);
+        border: 1px solid #55555522;
+    }
+
+    .translateUI textarea {
+        color: #fff;
+    }
+
+    .translateUITitle p {
+        color: #fff;
+    }
+
+    .language + label {
+        color: #fff;
+    }
+
+    .language:checked + label {
+        color: #FF2828;
+        border-bottom: 1px solid #FF2828;
+    }
+
+    .speak {
+        color: #fff;
+        border: 1px solid #ffffff55;
+    }
+
+    .speak:hover {
+        background-color: #ffffff1a;
+    }
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
+/* responsive */
+
+@media (max-width: 1140px) {
+    body {
+        width: calc(100% - 40px);
+        padding: 20px;
+        padding-top: 73px;
+    }
+
+    .InnerHeader {
+        width: 100%;
+        padding: 0px 20px;
+    }
+}
+
+@media (max-width: 900px) {
+    #translate {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 420px) {
+    .language + label {
+        margin-left: 1px !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .translateUI textarea {
+        height: 100px;
+    }
+}
+
+h4 {
+    margin-top: 40px !important;
+    font-weight: 500;
+    font-size: 16px;
+    opacity: 50%;
+}
+
+#history {
+    margin-top: 10px !important;
+    width: 100%;
+}
+
+.historyItem {
+    width: calc(100% - 30px);
+    background-color: white;
+    padding: 15px;
+    border-radius: 7px;
+    box-shadow: 0 1px 2px #0000001a;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.historyInput {
+    font-size: 16px;
+    margin-bottom: 5px !important;
+}
+
+.historyInput span {
+    opacity: 50%;
+}
+
+.historyOutput {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+@media (prefers-color-scheme: dark) {
+    .historyItem {
+        background-color: hsl(255, 7%, 15%);
+        border: 1px solid #55555522;
+    }
+}
+
+@keyframes main {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.credits {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+}
