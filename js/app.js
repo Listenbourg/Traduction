@@ -1,10 +1,21 @@
 let input = document.getElementById('input');
 let output = document.getElementById('output');
 
+let translateTiemout = null;
+
 let history = document.getElementById('history');
 let historyTimeout = null;
 
 let historyEnabled = false;
+
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 function fetchTranslation(from, text, to) {
     fetch('http://51.210.104.99:1841/translate', {
@@ -36,8 +47,8 @@ function fetchTranslation(from, text, to) {
             if(input.value.trim() !== "") {
                 history.innerHTML = `
                     <div class="historyItem">
-                        <p class="historyInput">${input.value} <span>en ${lang}</span></p>
-                        <p class="historyOutput">${output.value}</p>
+                        <p class="historyInput">${escapeHtml(input.value)} <span>en ${lang}</span></p>
+                        <p class="historyOutput">${escapeHtml(output.value)}</p>
                     </div>
                 ` + history.innerHTML;
             }
@@ -59,8 +70,12 @@ input.addEventListener('input', function() {
         to = "fr";
     }
 
-    let text = input.value;
-    fetchTranslation(from, text, to);
+    let text = escapeHtml(input.value);
+
+    clearTimeout(translateTiemout);
+    translateTiemout = setTimeout(() => {
+        fetchTranslation(from, text, to);
+    }, 110);
 });
 
 function Speak() {
