@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Listenbourg Traduction</title>
+        <meta name="description" content="Traduisez facilement en Listenbourgeois.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" href="./css/main.css">
+
+        <meta name="apple-mobile-web-app-title" content="Listenbourg Traduction">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+        <!-- theme color light and dark -->
+        <meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)">
+        <meta name="theme-color" content="#252429" media="(prefers-color-scheme: dark)">
+
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="header">
+            <div class="InnerHeader">
+                <div class="logo"></div>
+            </div>
+        </div>
+
+        <div id="translate">
+            <div class="translateUI">
+                <div class="translateUIInner translateUI__input">
+                    <div class="translateUITitle">
+                        <p>Texte source</p>
+
+                        <div class="languageSelect">
+                            <input class="language" type="radio" id="frenchSelect" name="listenSelect" checked value="fr">
+                            <label for="frenchSelect">Français</label><br>
+
+                            <input class="language" type="radio" id="listenishSelect" name="listenSelect" value="lis">
+                            <label for="listenishSelect">Listenbourgeois</label><br>
+                        </div>
+                    </div>
+
+                    <textarea id="input" placeholder="Entrez votre texte ici"></textarea>
+                </div>
+            </div>
+
+            <div class="translateUI">
+                <div class="translateUIInner translateUI__output">
+                    <div class="translateUITitle">
+                        <p>Texte traduit</p>
+                    </div>
+
+                    <div class="speak" onclick="Speak()">
+                        <span class="material-symbols-outlined">
+                            volume_up
+                        </span>
+                    </div>
+
+                    <textarea readonly id="output" placeholder="Votre texte traduit apparaîtra ici"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <h4>Traductions passées</h4>
+        <div id="history">
+            <div class="historyItem">
+                <span>Pas encore de traductions effectuées !</span>
+            </div>
+        </div>
+
+        <p class="credits">(C) 2022 Listenbourg - <a href="https://github.com/Listenbourg/Traduction">GitHub</a></p>
+        
+        <script src="js/app.js" async defer></script>
+    </body>
+</html>
