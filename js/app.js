@@ -1,6 +1,8 @@
 let input = document.getElementById('input');
 let output = document.getElementById('output');
 
+const translationSpeed = 200;
+
 let translateTiemout = null;
 
 let history = document.getElementById('history');
@@ -101,7 +103,7 @@ input.addEventListener('input', function() {
     loading.style.opacity = "1";
     translateTiemout = setTimeout(() => {
         fetchTranslation(from, text, to);
-    }, 500);
+    }, translationSpeed);
 });
 
 function Speak() {

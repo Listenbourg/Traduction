@@ -49,6 +49,11 @@ body {
     border-radius: 7px;
     box-shadow: 0 1px 2px #0000001a;
     position: relative;
+    transition: box-shadow 0.2s;
+}
+
+.translateUI:hover {
+    box-shadow: 0 1px 3px #00000049;
 }
 
 .translateUIInner {
@@ -149,6 +154,10 @@ body {
     .translateUI {
         background-color: hsl(255, 7%, 15%);
         border: 1px solid #55555522;
+    }
+
+    .translateUI:hover {
+        background-color: hsl(255, 7%, 16%);
     }
 
     .translateUI textarea {
@@ -325,4 +334,12 @@ h4 {
 .error {
     background-color: #C91212;
     color: #fff !important;
+}
+
+.error:hover {
+    background-color: rgb(160, 22, 22);
+}
+
+#output {
+    cursor: default;
 }
