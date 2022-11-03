@@ -157,7 +157,7 @@ input.addEventListener('input', function() {
 function Speak() {
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
-    msg.text = output.value;
+    msg.text = output.innerText;
     msg.lang = "de-DE";
     msg.voice = voices[1];
     window.speechSynthesis.speak(msg);
