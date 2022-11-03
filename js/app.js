@@ -98,15 +98,10 @@ input.addEventListener('input', function() {
 });
 
 function Speak() {
-    let lang = "de-DE";
-    if(frenchSelect.checked !== true) {
-        lang = "fr-FR";
-    }
-
     var msg = new SpeechSynthesisUtterance();
     var voices = window.speechSynthesis.getVoices();
     msg.text = output.value;
-    msg.lang = lang;
+    msg.lang = "de-DE";
     msg.voice = voices[1];
     window.speechSynthesis.speak(msg);
 }

@@ -238,7 +238,12 @@ h4 {
     border-radius: 7px;
     box-shadow: 0 1px 2px #0000001a;
     position: relative;
+    transition: background-color 0.1s;
     margin-bottom: 10px;
+}
+
+.historyItem:hover {
+    background-color: #0000001a;
 }
 
 .historyInput {
@@ -259,6 +264,10 @@ h4 {
     .historyItem {
         background-color: hsl(255, 7%, 15%);
         border: 1px solid #55555522;
+    }
+
+    .historyItem:hover {
+        background-color: #ffffff1a;
     }
 }
 
