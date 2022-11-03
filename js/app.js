@@ -21,26 +21,23 @@ let loading = document.getElementById('loading');
 let loadingTimeout = null;
 
 function fetchTranslation(from, text, to) {
-    loading.style.opacity = "1";
     document.getElementById('errors').innerHTML = "";
 
-    fetch('http://51.210.104.99:1841/translate', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ "from": from, "text": text, "to": to })
+    let url = `http://51.210.104.99:1841/translate?from=${from}&to=${to}&text=${text}`;
+
+    fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, {
+        method: 'GET',
     })
     .then(response => response.json())
     .then(response => {
+        response = JSON.parse(response.contents);
         clearTimeout(loadingTimeout);
         loadingTimeout = setTimeout(() => {
             loading.style.opacity = "0";
         }, 500);
 
-        let tranlation = response.response;
-        output.innerHTML = tranlation;
+        let translation = response.response;
+        output.innerHTML = translation;
 
         let lang = "Français";
         if(to == 'lis') {
@@ -48,6 +45,15 @@ function fetchTranslation(from, text, to) {
         }
 
         clearTimeout(historyTimeout);
+
+        if (translation == "Error during translation processing") {
+            document.getElementById('errors').innerHTML += `
+                <div class="historyItem error">
+                    <h3>La traduction ne s'est pas effectuée correctement !</h3>
+                    <p>${translation}</p>
+                </div>
+            `;
+        }
 
         historyTimeout = setTimeout(() => {
             if(!historyEnabled) {
@@ -92,9 +98,10 @@ input.addEventListener('input', function() {
     let text = escapeHtml(input.value);
 
     clearTimeout(translateTiemout);
+    loading.style.opacity = "1";
     translateTiemout = setTimeout(() => {
         fetchTranslation(from, text, to);
-    }, 110);
+    }, 500);
 });
 
 function Speak() {
