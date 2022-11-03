@@ -16,7 +16,7 @@ function escapeHtml(text) {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(/'/g, "’");
 }
 
 let loading = document.getElementById('loading');
@@ -33,21 +33,66 @@ function fetchTranslation(from, text, to) {
     .then(response => response.json())
     .then(response => {
         response = JSON.parse(response.contents);
+
         clearTimeout(loadingTimeout);
         loadingTimeout = setTimeout(() => {
             loading.style.opacity = "0";
         }, 500);
 
+        // interprête la trad
         let translation = response.response;
+        let scores = JSON.parse(response.detail_reponse);
+
+        console.log(text, response);
+
+        // détecte les mots inconnus (entre deux #)
+        // regex : /(?<=\#)(.*?)(?=\#)/g
+        // remplacer avec un span
+
+        // c'est copilot qui a fait ça moi j'avais la flemme
+
+        let words = translation.split(" ");
+        let newWords = [];
+        for (let i = 0; i < words.length; i++) {
+            let wordSearch = words[i];
+            let score = scores.find( ({ word }) => word === wordSearch ).score
+
+            // generate id
+            let wordID = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+            if (score == -1) {
+                // le mot correspond pas
+                let newWord = wordSearch.replace(/#/g, "");
+                newWords.push(`<span id="notice_${wordID}" class="word unknown-word" onmouseover="showWord('${escapeHtml(newWord)}', 'notice_${wordID}', 0)">${newWord}</span>`);
+            }
+            else if (score < 1) {
+                // le mot correspond pas totalement
+                let newWord = wordSearch.replace(/#/g, "");
+                newWords.push(`<span id="notice_${wordID}" class="word unexact-word" onmouseover="showWord('${escapeHtml(newWord)}', 'notice_${wordID}', ${score})">${newWord}</span>`);
+            }
+            else {
+                // le mot correspond
+                let newWord = wordSearch.replace(/#/g, "");
+                newWords.push(`<span id="notice_${wordID}" class="word perfect-word" onmouseover="showWord('${escapeHtml(newWord)}', 'notice_${wordID}', ${score})">${newWord}</span>`);
+            }
+        }
+
+        translation = newWords.join(" ");
+
+        // affiche la trad
+        if (document.getElementsByClassName('placeholder').length !== 0) {
+            document.getElementsByClassName('placeholder')[0].remove();
+        }
+
         output.innerHTML = translation;
 
+        // détermine la langue
         let lang = "Français";
         if(to == 'lis') {
             lang = "Listenbourgeois";
         }
 
-        clearTimeout(historyTimeout);
-
+        // error handling
         if (translation == "Error during translation processing") {
             document.getElementById('errors').innerHTML += `
                 <div class="historyItem error">
@@ -56,6 +101,9 @@ function fetchTranslation(from, text, to) {
                 </div>
             `;
         }
+
+        // historique
+        clearTimeout(historyTimeout);
 
         historyTimeout = setTimeout(() => {
             if(!historyEnabled) {
@@ -67,7 +115,7 @@ function fetchTranslation(from, text, to) {
                 history.innerHTML = `
                     <div class="historyItem">
                         <p class="historyInput">${escapeHtml(input.value)} <span>en ${lang}</span></p>
-                        <p class="historyOutput">${escapeHtml(output.value)}</p>
+                        <p class="historyOutput">${escapeHtml(output.innerText)}</p>
                     </div>
                 ` + history.innerHTML;
             }
@@ -113,4 +161,24 @@ function Speak() {
     msg.lang = "de-DE";
     msg.voice = voices[1];
     window.speechSynthesis.speak(msg);
+}
+
+function showWord(word, span, score) {
+    let str = `"${word}" correspond à <B>${Math.round(score * 100)}%</B>`;
+
+    let theme = "tomato";
+    if(score == 0) {
+        theme = "wrong";
+    }
+    else if(score == 1) {
+        theme = "default";
+    }
+
+    tippy(document.getElementById(span), {
+        theme: theme,
+        content: str,
+        placement: 'bottom',
+        arrow: false,
+        allowHTML: true
+    });
 }

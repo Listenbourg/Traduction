@@ -52,6 +52,10 @@ body {
     transition: box-shadow 0.2s;
 }
 
+.translateUI:focus-within {
+    box-shadow: 0 1px 2px #00000049;
+}
+
 .translateUI:hover {
     box-shadow: 0 1px 3px #00000049;
 }
@@ -80,7 +84,7 @@ body {
     align-items: center;
 }
 
-.translateUI textarea {
+.translateUI textarea, .translateUI #output {
     width: calc(100% - 40px);
     height: 70px;
     padding: 20px;
@@ -156,8 +160,12 @@ body {
         border: 1px solid #55555522;
     }
 
-    .translateUI:hover {
+    .translateUI:focus-within {
         background-color: hsl(255, 7%, 16%);
+    }
+
+    .translateUI:hover {
+        background-color: hsl(255, 7%, 17%);
     }
 
     .translateUI textarea {
@@ -342,4 +350,35 @@ h4 {
 
 #output {
     cursor: default;
+    overflow: scroll;
+}
+
+#output::-webkit-scrollbar, #input::-webkit-scrollbar {
+    width: 0px;
+}
+
+#output .placeholder {
+    color: #777;
+}
+
+span.unknown-word {
+    color: rgb(236, 34, 19);
+    padding-bottom: 1px !important;
+    border-bottom: 1px dashed rgb(236, 34, 19);
+}
+
+span.unexact-word {
+    color: #ec6a13;
+    padding-bottom: 1px !important;
+    border-bottom: 1px dashed #ec6a13;
+}
+
+.tippy-box[data-theme~='tomato'] {
+    background-color: #ec6a13;
+    color: #fff;
+}
+
+.tippy-box[data-theme~='wrong'] {
+    background-color: rgb(236, 34, 19);
+    color: #fff;
 }

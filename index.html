@@ -82,7 +82,11 @@
                         </span>
                     </div>
 
-                    <textarea readonly id="output" placeholder="Votre texte traduit apparaîtra ici"></textarea>
+                    <div id="output">
+                        <p class="placeholder">
+                            Votre texte traduit apparaîtra ici
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -95,6 +99,9 @@
         </div>
 
         <p class="credits">(C) 2022 Listenbourg - <a href="https://github.com/Listenbourg/Traduction">GitHub</a></p>
+
+        <script src="https://unpkg.com/@popperjs/core@2"></script>
+        <script src="https://unpkg.com/tippy.js@6"></script>
         
         <script src="js/app.js" async defer></script>
     </body>
