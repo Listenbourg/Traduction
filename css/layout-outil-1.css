@@ -1,0 +1,165 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	background-color: var(--clr-bg-alt);
+}
+body > * {
+	padding: 24px 16px;
+}
+
+* {
+	transition: all 0.2s ease-in-out;
+}
+
+.header {
+	background-color: var(--clr-bg);
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+	border-bottom: 1px solid var(--clr-border);
+	letter-spacing: -0.045em;
+}
+.header .header-logo {
+	flex: 1 1 auto;
+	background-image: var(--logo);
+	background-repeat: no-repeat;
+	background-size: contain;
+	width: auto;
+	height: 32px;
+}
+.header nav {
+	flex: 0 1 auto;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+.header nav .nav-btn {
+	font-size: 17px;
+	text-decoration: none;
+}
+.header nav .nav-btn.current {
+	text-decoration: underline;
+}
+.header nav .nav-btn.important {
+	color: var(--clr-red);
+}
+.header nav .nav-btn.important:hover {
+	color: var(--clr-red-alt);
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.main .card {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 0px;
+	background: var(--clr-bg);
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+	border-radius: 8px;
+	font-family: "HK Grotesk";
+	font-size: 17px;
+}
+.main .card .card-header {
+	width: 100%;
+	display: flex;
+	padding: 0px 20px;
+	gap: 20px;
+	border-bottom: 1px solid var(--clr-border);
+	align-items: center;
+	justify-content: space-between;
+	font-weight: 700;
+	position: relative;
+}
+.main .card .card-header .card-title {
+	gap: 20px;
+	padding: 10px 0;
+	align-items: center;
+}
+.main .card .card-header .card-tabs {
+	gap: 20px;
+	display: flex;
+}
+.main .card .card-header .card-tabs .card-tab {
+	padding: 10px 0;
+}
+.main .card .card-header .card-tabs .card-tab.active {
+	padding-bottom: 8px;
+	border-bottom: 2px solid var(--clr-red);
+}
+.main .card .loading.visible {
+	height: 2px;
+	position: absolute;
+	bottom: 0;
+	overflow: hidden;
+	left: 0;
+	right: 0;
+	transition: opacity 0.2s;
+}
+.main .card .loading.visible > div {
+	background-color: var(--clr-red);
+	width: 20%;
+	height: 100%;
+	-webkit-animation: loading 0.8s infinite;
+	animation: loading 0.8s infinite;
+}
+.main .card .card-content {
+	width: 100%;
+	padding: 20px;
+	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	border-radius: 0 0 8px 8px;
+}
+.main .row {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+.main .part-title {
+	padding-top: 30px;
+	color: var(--clr-text-alt);
+	font-weight: bold;
+}
+
+@media screen and (min-width: 768px) {
+	.main .row {
+		flex-direction: row;
+	}
+	body > * {
+		padding: 24px 64px;
+	}
+}
+.footer {
+	color: var(--clr-text-alt);
+	margin-top: auto;
+}
+
+@-webkit-keyframes loading {
+	0% {
+		width: 20%;
+		transform: translateX(-100%);
+	}
+	100% {
+		width: 100%;
+		transform: translateX(100%);
+	}
+}
+
+@keyframes loading {
+	0% {
+		width: 20%;
+		transform: translateX(-100%);
+	}
+	100% {
+		width: 100%;
+		transform: translateX(100%);
+	}
+}
