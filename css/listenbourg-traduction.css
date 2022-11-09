@@ -1,108 +1,96 @@
 :root {
-	--logo: url("../assets/logo.svg");
+  --logo: url("../assets/logo.svg");
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		--logo: url("../assets/logo_dark.svg");
-	}
+  :root {
+    --logo: url("../assets/logo_dark.svg");
+  }
 }
 .translation .translate-input {
-	background: var(--clr-bg);
-	color: var(--clr-text);
-	width: 100%;
-	min-height: 100px;
-	outline: none;
-	border: none;
-	font-family: "HK Grotesk", sans-serif;
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  width: 100%;
+  min-height: 100px;
+  outline: none;
+  border: none;
+  font-family: "HK Grotesk", sans-serif;
 }
 .translation .card-content {
-	font-weight: 400;
-	font-size: 17px;
+  font-weight: 400;
+  font-size: 17px;
 }
 .translation .card {
-	width: 100%;
+  width: 100%;
 }
-.translation input[type="radio"] {
-	width: 0;
-	height: 0;
-	opacity: 0;
-	display: contents;
+.translation input[type=radio] {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  display: contents;
 }
 .translation span.unknown-word {
-	color: rgb(236, 34, 19);
-	padding-bottom: 1px !important;
-	border-bottom: 1px dashed rgb(236, 34, 19);
+  color: var(--clr-red-alt);
+  padding-bottom: 1px !important;
+  border-bottom: 1px dashed var(--clr-red-alt);
 }
 .translation span.unexact-word {
-	color: #ec6a13;
-	padding-bottom: 1px !important;
-	border-bottom: 1px dashed #ec6a13;
+  color: var(--clr-orange);
+  padding-bottom: 1px !important;
+  border-bottom: 1px dashed var(--clr-orange);
 }
-.translation .tippy-box[data-theme~="tomato"] {
-	background-color: #ec6a13;
-	color: #fff;
+.translation .tippy-box[data-theme~=tomato] {
+  background-color: var(--clr-orange);
+  color: #fff;
 }
-.translation .tippy-box[data-theme~="wrong"] {
-	background-color: rgb(236, 34, 19);
-	color: #fff;
+.translation .tippy-box[data-theme~=wrong] {
+  background-color: var(--clr-red-alt);
+  color: #fff;
 }
 
 main .translation .card .card-header .card-tabs label {
-	cursor: pointer;
+  cursor: pointer;
 }
-main
-	.translation
-	.card
-	.card-header
-	.card-tabs
-	input[type="radio"]:not(:checked)
-	+ label {
-	padding-bottom: 10px;
+main .translation .card .card-header .card-tabs input[type=radio]:not(:checked) + label {
+  padding-bottom: 10px;
 }
-main
-	.translation
-	.card
-	.card-header
-	.card-tabs
-	input[type="radio"]:checked
-	+ label {
-	padding-bottom: 8px;
-	border-bottom: 2px solid var(--clr-red);
+main .translation .card .card-header .card-tabs input[type=radio]:checked + label {
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--clr-red);
 }
 
 #errors {
-	background: var(--clr-red-alt);
-	color: var(--clr-text);
-	border-radius: 8px;
-	padding: 8px 16px;
-	position: fixed;
-	top: 10px;
-	left: 16px;
-	right: 16px;
+  background: var(--clr-red-alt);
+  color: var(--clr-text);
+  border-radius: var(--border-radius);
+  padding: 8px 16px;
+  position: fixed;
+  top: 10px;
+  left: 16px;
+  right: 16px;
 }
 #errors.visible {
-	display: block;
+  display: block;
 }
 #errors:not(.visible) {
-	display: none;
+  display: none;
 }
 
 .history > .card-content > .history-line:not(:first-child) {
-	padding-top: 10px;
-	border-top: 1px solid var(--clr-border);
+  padding-top: 10px;
+  border-top: 1px solid var(--clr-border);
 }
 .history > .card-content > .history-line .history-source {
-	font-size: 13px;
-	color: var(--clr-text-alt);
+  font-size: 13px;
+  color: var(--clr-text-alt);
 }
 
 @media screen and (min-width: 768px) {
-	.translation .card {
-		width: 50%;
-	}
-	#errors {
-		left: 64px;
-		right: 64px;
-	}
+  .translation .card {
+    width: 50%;
+  }
+  #errors {
+    left: 64px;
+    right: 64px;
+  }
 }

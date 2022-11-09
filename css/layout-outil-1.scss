@@ -64,7 +64,7 @@ body {
 		padding: 0px;
 		background: var(--clr-bg);
 		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-		border-radius: 8px;
+		border-radius: var(--border-radius);
 		font-family: "HK Grotesk";
 		font-size: 17px;
 		.card-header {
@@ -116,7 +116,7 @@ body {
 			gap: 10px;
 			display: flex;
 			flex-direction: column;
-			border-radius: 0 0 8px 8px;
+			border-radius: 0 0 var(--border-radius) var(--border-radius);
 		}
 	}
 
