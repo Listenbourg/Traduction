@@ -12,193 +12,183 @@ let historyTimeout = null;
 let historyEmpty = true;
 let historyEnabled = false;
 
+const DEBUG = false;
+
 function escapeHtml(text) {
-	return text
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "’");
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "’");
 }
 
 let loading = document.getElementById("translateLoading");
 let loadingTimeout = null;
 
 function fetchTranslation(from, text, to) {
-	ERROR_DIV.innerHTML = "";
-	ERROR_DIV.classList.remove("visible");
+  ERROR_DIV.innerHTML = "";
+  ERROR_DIV.classList.remove("visible");
 
-	let url = `http://51.210.104.99:1841/translate?from=${from}&to=${to}&text=${text}`;
+  let url = `http://51.210.104.99:1841/translate?from=${from}&to=${to}&text=${text}`;
 
-	fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, {
-		method: "GET",
-	})
-		.then((response) => response.json())
-		.then((response) => {
-			response = JSON.parse(response.contents);
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((response) => {
+      response = JSON.parse(response.contents);
 
-			clearTimeout(loadingTimeout);
-			loadingTimeout = setTimeout(() => {
-				translateLoading.classList.remove("visible");
-			}, 500);
+      clearTimeout(loadingTimeout);
+      loadingTimeout = setTimeout(() => {
+        translateLoading.classList.remove("visible");
+      }, 500);
 
-			// interprête la trad
-			let translation = response.response;
-			let scores = JSON.parse(response.detail_reponse);
+      DEBUG && console.log(text, response);
 
-			console.log(text, response);
+      let newWords = [];
+      let details = JSON.parse(response.detail_reponse);
 
-			// détecte les mots inconnus (entre deux #)
-			// regex : /(?<=\#)(.*?)(?=\#)/g
-			// remplacer avec un span
+      for (let detail of details) {
+        let word = detail.word.trim();
+        let score = detail.score;
 
-			// c'est copilot qui a fait ça moi j'avais la flemme
+        // generate id
+        let wordID =
+          Math.random().toString(36).substring(2, 15) +
+          Math.random().toString(36).substring(2, 15);
 
-			let words = translation.split(" ");
-			let newWords = [];
-			for (let i = 0; i < words.length; i++) {
-				let wordSearch = words[i];
-				let score = scores.find(({ word }) => word === wordSearch).score;
+        if (score == -1) {
+          // le mot correspond pas
+          newWords.push(
+            `<span id="notice_${wordID}" class="word unknown-word" onmouseover="showWord('${escapeHtml(
+              word
+            )}', 'notice_${wordID}', 0)">${word}</span>`
+          );
+        } else if (score < 1) {
+          // le mot correspond pas totalement
+          newWords.push(
+            `<span id="notice_${wordID}" class="word unexact-word" onmouseover="showWord('${escapeHtml(
+              word
+            )}', 'notice_${wordID}', ${score})">${word}</span>`
+          );
+        } else {
+          // le mot correspond
+          newWords.push(
+            `<span id="notice_${wordID}" class="word perfect-word" onmouseover="showWord('${escapeHtml(
+              word
+            )}', 'notice_${wordID}', ${score})">${word}</span>`
+          );
+        }
+      }
 
-				// generate id
-				let wordID =
-					Math.random().toString(36).substring(2, 15) +
-					Math.random().toString(36).substring(2, 15);
+      let translation = newWords.join(" ");
 
-				if (score == -1) {
-					// le mot correspond pas
-					let newWord = wordSearch.replace(/#/g, "");
-					newWords.push(
-						`<span id="notice_${wordID}" class="word unknown-word" onmouseover="showWord('${escapeHtml(
-							newWord
-						)}', 'notice_${wordID}', 0)">${newWord}</span>`
-					);
-				} else if (score < 1) {
-					// le mot correspond pas totalement
-					let newWord = wordSearch.replace(/#/g, "");
-					newWords.push(
-						`<span id="notice_${wordID}" class="word unexact-word" onmouseover="showWord('${escapeHtml(
-							newWord
-						)}', 'notice_${wordID}', ${score})">${newWord}</span>`
-					);
-				} else {
-					// le mot correspond
-					let newWord = wordSearch.replace(/#/g, "");
-					newWords.push(
-						`<span id="notice_${wordID}" class="word perfect-word" onmouseover="showWord('${escapeHtml(
-							newWord
-						)}', 'notice_${wordID}', ${score})">${newWord}</span>`
-					);
-				}
-			}
+      // affiche la trad
+      if (document.getElementsByClassName("placeholder").length !== 0) {
+        document.getElementsByClassName("placeholder")[0].remove();
+      }
 
-			translation = newWords.join(" ");
+      output.innerHTML = translation;
 
-			// affiche la trad
-			if (document.getElementsByClassName("placeholder").length !== 0) {
-				document.getElementsByClassName("placeholder")[0].remove();
-			}
+      // détermine la langue
+      let lang = "Français";
+      if (to == "lis") {
+        lang = "Listenbourgeois";
+      }
 
-			output.innerHTML = translation;
+      // error handling
+      if (translation == "Error during translation processing") {
+        ERROR_DIV.innerHTML =
+          `<h3>La traduction ne s'est pas effectuée correctement !</h3>\n` +
+          `<p>${translation}</p>`;
+        ERROR_DIV.classList.add("visible");
+      }
 
-			// détermine la langue
-			let lang = "Français";
-			if (to == "lis") {
-				lang = "Listenbourgeois";
-			}
+      // historique
+      clearTimeout(historyTimeout);
 
-			// error handling
-			if (translation == "Error during translation processing") {
-				ERROR_DIV.innerHTML =
-					`<h3>La traduction ne s'est pas effectuée correctement !</h3>\n` +
-					`<p>${translation}</p>`;
-				ERROR_DIV.classList.add("visible");
-			}
+      historyTimeout = setTimeout(() => {
+        if (!historyEnabled) {
+          history.innerHTML =
+            '<div class="history-line"><div class="history-result">Historique vide, vous n\'avez pas encore traduit quelque chose !</div></div>';
+          historyEnabled = true;
+          historyEmpty = true;
+        }
 
-			// historique
-			clearTimeout(historyTimeout);
-
-			historyTimeout = setTimeout(() => {
-				if (!historyEnabled) {
-					history.innerHTML =
-						'<div class="history-line"><div class="history-result">Historique vide, vous n\'avez pas encore traduit quelque chose !</div></div>';
-					historyEnabled = true;
-					historyEmpty = true;
-				}
-
-				if (input.value.trim() !== "") {
-					history.innerHTML =
-						`
+        if (input.value.trim() !== "") {
+          history.innerHTML =
+            `
                         <div class="history-line">
                     <div class="history-source">${escapeHtml(
-											input.value
-										)} - EN ${lang.toUpperCase().trim()}</div>
+                      input.value
+                    )} - EN ${lang.toUpperCase().trim()}</div>
                     <div class="history-result">${escapeHtml(
-											output.innerText
-										)}</div>
+                      output.innerText
+                    )}</div>
                 </div>` + (historyEmpty ? "" : history.innerHTML);
 
-					historyEmpty = false;
-				}
-			}, 1000);
-		})
-		.catch((error) => {
-			console.error(error);
-			ERROR_DIV.innerHTML += `
+          historyEmpty = false;
+        }
+      }, 1000);
+    })
+    .catch((error) => {
+      console.error(error);
+      ERROR_DIV.innerHTML += `
                 <h3>Une erreur est survenue !</h3>
                 <p>${error}</p>
         `;
-			ERROR_DIV.classList.add("visible");
-		});
+      ERROR_DIV.classList.add("visible");
+    });
 }
 
 let frenchSelect = document.getElementById("frenchSelect");
 let listenishSelect = document.getElementById("listenishSelect");
 
 input.addEventListener("input", function () {
-	let from = "fr";
-	let to = "lis";
+  let from = "fr";
+  let to = "lis";
 
-	clearTimeout(historyTimeout);
+  clearTimeout(historyTimeout);
 
-	if (frenchSelect.checked !== true) {
-		from = "lis";
-		to = "fr";
-	}
+  if (frenchSelect.checked !== true) {
+    from = "lis";
+    to = "fr";
+  }
 
-	let text = escapeHtml(input.value);
+  let text = escapeHtml(input.value);
 
-	clearTimeout(translateTiemout);
-	translateLoading.classList.add("visible");
-	translateTiemout = setTimeout(() => {
-		fetchTranslation(from, text, to);
-	}, translationSpeed);
+  clearTimeout(translateTiemout);
+  translateLoading.classList.add("visible");
+  translateTiemout = setTimeout(() => {
+    fetchTranslation(from, text, to);
+  }, translationSpeed);
 });
 
 function Speak() {
-	var msg = new SpeechSynthesisUtterance();
-	var voices = window.speechSynthesis.getVoices();
-	msg.text = output.innerText;
-	msg.lang = "de-DE";
-	msg.voice = voices[1];
-	window.speechSynthesis.speak(msg);
+  var msg = new SpeechSynthesisUtterance();
+  var voices = window.speechSynthesis.getVoices();
+  msg.text = output.innerText;
+  msg.lang = "de-DE";
+  msg.voice = voices[1];
+  window.speechSynthesis.speak(msg);
 }
 
 function showWord(word, span, score) {
-	let str = `"${word}" correspond à <B>${Math.round(score * 100)}%</B>`;
+  let str = `"${word}" correspond à <B>${Math.round(score * 100)}%</B>`;
 
-	let theme = "tomato";
-	if (score == 0) {
-		theme = "wrong";
-	} else if (score == 1) {
-		theme = "default";
-	}
+  let theme = "tomato";
+  if (score == 0) {
+    theme = "wrong";
+  } else if (score == 1) {
+    theme = "default";
+  }
 
-	tippy(document.getElementById(span), {
-		theme: theme,
-		content: str,
-		placement: "bottom",
-		arrow: false,
-		allowHTML: true,
-	});
+  tippy(document.getElementById(span), {
+    theme: theme,
+    content: str,
+    placement: "bottom",
+    arrow: false,
+    allowHTML: true,
+  });
 }

@@ -23,7 +23,7 @@
 .translation .card {
   width: 100%;
 }
-.translation input[type=radio] {
+.translation input[type="radio"] {
   width: 0;
   height: 0;
   opacity: 0;
@@ -39,11 +39,11 @@
   padding-bottom: 1px !important;
   border-bottom: 1px dashed var(--clr-orange);
 }
-.translation .tippy-box[data-theme~=tomato] {
+.translation .tippy-box[data-theme~="tomato"] {
   background-color: var(--clr-orange);
   color: #fff;
 }
-.translation .tippy-box[data-theme~=wrong] {
+.translation .tippy-box[data-theme~="wrong"] {
   background-color: var(--clr-red-alt);
   color: #fff;
 }
@@ -51,10 +51,22 @@
 main .translation .card .card-header .card-tabs label {
   cursor: pointer;
 }
-main .translation .card .card-header .card-tabs input[type=radio]:not(:checked) + label {
+main
+  .translation
+  .card
+  .card-header
+  .card-tabs
+  input[type="radio"]:not(:checked)
+  + label {
   padding-bottom: 10px;
 }
-main .translation .card .card-header .card-tabs input[type=radio]:checked + label {
+main
+  .translation
+  .card
+  .card-header
+  .card-tabs
+  input[type="radio"]:checked
+  + label {
   padding-bottom: 8px;
   border-bottom: 2px solid var(--clr-red);
 }
@@ -68,6 +80,7 @@ main .translation .card .card-header .card-tabs input[type=radio]:checked + labe
   top: 10px;
   left: 16px;
   right: 16px;
+  z-index: 100;
 }
 #errors.visible {
   display: block;
