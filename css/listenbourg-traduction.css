@@ -94,3 +94,17 @@ main .translation .card .card-header .card-tabs input[type=radio]:checked + labe
     right: 64px;
   }
 }
+.result-content {
+  min-height: 62px;
+  position: relative;
+}
+.result-content .speak {
+  display: flex;
+  padding: 8px;
+  background: var(--clr-bg-alt);
+  border-radius: 99px;
+  border: 1px solid var(--clr-border);
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
