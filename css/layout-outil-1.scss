@@ -5,8 +5,8 @@ body {
 
 body {
 	background-color: var(--clr-bg-alt);
-	& > * {
-		padding: 24px 16px;
+	& > header, & > main, & > footer {
+		padding: 24px 8px;
 	}
 }
 
@@ -136,7 +136,7 @@ body {
 	.main .row {
 		flex-direction: row;
 	}
-	body > * {
+	body > header,body > main, body > footer {
 		padding: 24px 64px;
 	}
 }

@@ -175,7 +175,7 @@ function Speak() {
 }
 
 function showWord(word, span, score) {
-  let str = `"${word}" correspond à <B>${Math.round(score * 100)}%</B>`;
+  let str = `"${word}" correspond à <b>${Math.round(score * 100)}%</b>`;
 
   let theme = "tomato";
   if (score == 0) {
