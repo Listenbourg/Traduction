@@ -7,7 +7,7 @@ body {
   background-color: var(--clr-bg-alt);
 }
 body > header, body > main, body > footer {
-  padding: 24px 16px;
+  padding: 24px 8px;
 }
 
 * {
