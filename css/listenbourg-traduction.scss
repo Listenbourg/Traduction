@@ -46,16 +46,6 @@
         padding-bottom: 1px !important;
         border-bottom: 1px dashed var(--clr-orange);
     }
-
-    .tippy-box[data-theme~="tomato"] {
-        background-color: var(--clr-orange);
-        color: #fff;
-    }
-
-    .tippy-box[data-theme~="wrong"] {
-        background-color: var(--clr-red-alt);
-        color: #fff;
-    }
 }
 main .translation .card .card-header .card-tabs {
     label {
@@ -127,4 +117,12 @@ main .translation .card .card-header .card-tabs {
 	}
 }
 
+.tippy-box[data-theme~="tomato"] {
+    background-color: var(--clr-orange);
+    color: #fff;
+}
 
+.tippy-box[data-theme~="wrong"] {
+    background-color: var(--clr-red-alt);
+    color: #fff;
+}

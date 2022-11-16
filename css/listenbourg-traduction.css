@@ -39,14 +39,6 @@
   padding-bottom: 1px !important;
   border-bottom: 1px dashed var(--clr-orange);
 }
-.translation .tippy-box[data-theme~=tomato] {
-  background-color: var(--clr-orange);
-  color: #fff;
-}
-.translation .tippy-box[data-theme~=wrong] {
-  background-color: var(--clr-red-alt);
-  color: #fff;
-}
 
 main .translation .card .card-header .card-tabs label {
   cursor: pointer;
@@ -107,4 +99,14 @@ main .translation .card .card-header .card-tabs input[type=radio]:checked + labe
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+
+.tippy-box[data-theme~=tomato] {
+  background-color: var(--clr-orange);
+  color: #fff;
+}
+
+.tippy-box[data-theme~=wrong] {
+  background-color: var(--clr-red-alt);
+  color: #fff;
 }
